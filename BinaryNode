@@ -3,8 +3,8 @@ package assign08;
 
 public class BinaryNode <T> {
 	T data;
-	T leftChild;
-	T rightChild;
+	BinaryNode <T> leftChild;
+	BinaryNode <T> rightChild;
 	
 	public BinaryNode(T data) {
 		this.data = data;
@@ -21,20 +21,19 @@ public class BinaryNode <T> {
 		this.data = data;
 	}
 	
-	
-	public void setLChild(T lChild) {
+	public void setLChild(BinaryNode<T> lChild) {
 		this.leftChild = lChild;
 	}
 	
-	public void setRChild(T rChild) {
+	public void setRChild(BinaryNode<T> rChild) {
 		this.rightChild = rChild;
 	}
 	
-	public T getLChild() {
+	public BinaryNode<T> getLChild() {
 		return this.leftChild;
 	}
 	
-	public T getRChild() {
+	public BinaryNode<T> getRChild() {
 		return this.rightChild;
 	}
 	

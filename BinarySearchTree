@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
-public class BinarySearchTree implements SortedSet{
+public class BinarySearchTree<Type extends Comparable<? super Type>> implements SortedSet<Type>{
 
 	private BinaryNode<Type> root;
 	private int size;
@@ -16,14 +16,14 @@ public class BinarySearchTree implements SortedSet{
 	public boolean add(Type item) {
 		BinaryNode<Type> temp = root;
 		
-		while(!temp == null)
-			if(temp.getData().compare(item) == 0){
+		while(temp != null)
+			if(temp.getData().compareTo(item) == 0){
 				return false;
 			}
-			if(temp.getData().compare(item) > 0) {
-				temp.setData((item.getRChild()).getData);
+			if(temp.getData().compareTo(item) > 0) {
+				temp = temp.getRChild();
 			}
-			if(temp.getData().compare(item) < 0) {
+			if(temp.getData().compareTo(item) < 0) {
 				
 				temp.setData((item.getLChild()).getData);
 				
@@ -33,8 +33,10 @@ public class BinarySearchTree implements SortedSet{
 	}
 
 	@Override
-	public boolean addAll(Collection items) {
-		// TODO Auto-generated method stub
+	public boolean addAll(Collection<? extends Type> items) {
+		for (Type i : items) {
+			add(i);
+		}
 		return false;
 	}
 
@@ -46,8 +48,23 @@ public class BinarySearchTree implements SortedSet{
 
 	@Override
 	public boolean contains(Comparable item) {
-		// TODO Auto-generated method stub
+		BinaryNode<Type> temp = root;
+		
+		while(temp != null)
+			if(temp.getData().compareTo(item) == 0){
+				return true;
+			}
+			if(temp.getData().compareTo(item) > 0 ) {
+				temp = temp.getRChild();
+			}
+			if(temp.getData().compareTo(item) < 0) {
+				
+				temp.setData((item.getLChild()).getData);
+				
+			}
+			
 		return false;
+		
 	}
 
 	@Override

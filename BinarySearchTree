@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.NoSuchElementException;
 
 public class BinarySearchTree<Type extends Comparable<? super Type>> implements SortedSet<Type>{
-
 	private BinaryNode<Type> root;
 	private int size;
 	
@@ -16,23 +15,29 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 	public boolean add(Type item) {
 		BinaryNode<Type> temp = root;
 		
-		while(temp != null)
+		while(!(temp == null)) {
 			if(temp.getData().compareTo(item) == 0){
 				return false;
 			}
 			if(temp.getData().compareTo(item) > 0) {
-				temp = temp.getRChild();
+				if(temp.getRChild() == null) {
+					temp.setRChild(new BinaryNode<Type>(item));
+					return true;
+
+				}
+				temp = (BinaryNode<Type>) temp.getRChild();
 			}
 			if(temp.getData().compareTo(item) < 0) {
-				
-				temp.setData((item.getLChild()).getData);
-				
+				if(temp.getLChild() == null) {
+					temp.setLChild(new BinaryNode<Type>(item));
+					return true;
+				}
+				temp = (BinaryNode<Type>) temp.getLChild();
 			}
-			
+		}	
 		return false;
 	}
 
-	@Override
 	public boolean addAll(Collection<? extends Type> items) {
 		for (Type i : items) {
 			add(i);
@@ -40,36 +45,44 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 		return false;
 	}
 
-	@Override
+	
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		root.setLChild(null);
+		root.setRChild(null);
+		root.setData(null);
 	}
 
 	@Override
-	public boolean contains(Comparable item) {
+	public boolean contains(Type item) {
 		BinaryNode<Type> temp = root;
 		
-		while(temp != null)
+		while(!(temp == null)) {
 			if(temp.getData().compareTo(item) == 0){
 				return true;
 			}
-			if(temp.getData().compareTo(item) > 0 ) {
-				temp = temp.getRChild();
+			if(temp.getData().compareTo(item) > 0) {
+				if(temp.getRChild() == null) {
+					return false;
+				}
+				temp = (BinaryNode<Type>) temp.getRChild();
 			}
 			if(temp.getData().compareTo(item) < 0) {
-				
-				temp.setData((item.getLChild()).getData);
-				
+				if(temp.getLChild() == null) {
+					return false;
+				}
+				temp = (BinaryNode<Type>) temp.getLChild();
 			}
-			
+		}	
 		return false;
-		
 	}
 
 	@Override
-	public boolean containsAll(Collection items) {
-		// TODO Auto-generated method stub
+	public boolean containsAll(Collection<? extends Type> items) {
+		boolean tester = false;
+		
+		for(Type item : items) {
+			tester = contains(item);
+		}
 		return false;
 	}
 
@@ -116,3 +129,4 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 	}
 
 }
+
